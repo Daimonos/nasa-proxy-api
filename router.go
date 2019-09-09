@@ -7,5 +7,6 @@ func NewRouter() *mux.Router {
 	r.HandleFunc("/api/v1/neos/{date}", GetNeosByDate)
 	r.HandleFunc("/api/v1/marsweather", GetMarsWeather)
 	r.HandleFunc("/api/v1/apod", GetApod)
+	r.HandleFunc("/api/v1/apod/{date}", GetApod)
 	return r
 }

@@ -16,6 +16,7 @@ func (db *DBClient) Open(filepath string) error {
 	d, err := bbolt.Open(filepath, 0600, nil)
 	d.Update(func(tx *bbolt.Tx) error {
 		_, err := tx.CreateBucketIfNotExists([]byte("NEOS"))
+		_, err = tx.CreateBucketIfNotExists([]byte("APOD"))
 		return err
 	})
 	if err != nil {

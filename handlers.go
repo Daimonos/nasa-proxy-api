@@ -52,11 +52,38 @@ func GetNeosByDate(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetApod(w http.ResponseWriter, r *http.Request) {
-	apod, err := nasa.GetApod(time.Now(), true)
+	vars := mux.Vars(r)
+	t := time.Now()
+	var err error
+	if vars["date"] != "" {
+		t, err = time.Parse("2006-01-02", vars["date"])
+		if err != nil {
+			WriteError(err, w, http.StatusInternalServerError)
+			return
+		}
+	}
+	key := t.Format("2006-01-02")
+	bytes, err := DB.Get("APOD", key)
+	if err != nil {
+		WriteError(err, w, http.StatusInternalServerError)
+		return
+	}
+	if len(bytes) > 0 {
+		var apod models.Apod
+		jsonParseErr := json.Unmarshal(bytes, &apod)
+		if jsonParseErr != nil {
+			WriteError(jsonParseErr, w, http.StatusInternalServerError)
+			return
+		}
+		WriteJSON(apod, w, http.StatusOK)
+		return
+	}
+	apod, err := nasa.GetApod(t, true)
 	if err != nil {
 		WriteError(err, w, http.StatusBadRequest)
 		return
 	}
+	DB.Set("APOD", key, apod)
 	WriteJSON(apod, w, http.StatusOK)
 }
 
