@@ -116,6 +116,24 @@ func GetMarsWeather(w http.ResponseWriter, r *http.Request) {
 	WriteJSON(weather, w, http.StatusOK)
 }
 
+func SearchMarsRoverImages(w http.ResponseWriter, r *http.Request) {
+	defer r.Body.Close()
+	decoder := json.NewDecoder(r.Body)
+	var query nasa.MarsRoverImageSearchQuery
+	err := decoder.Decode(&query)
+	if err != nil {
+		WriteError(err, w, http.StatusInternalServerError)
+		return
+	}
+	resp, reqErr := nasa.SearchMarsRoverImages(query)
+	if reqErr != nil {
+		WriteError(err, w, http.StatusInternalServerError)
+		return
+	}
+	WriteJSON(resp, w, http.StatusOK)
+
+}
+
 func WriteError(err error, w http.ResponseWriter, code int) {
 	w.WriteHeader(code)
 	w.Header().Add("Content-Type", "application/json")
