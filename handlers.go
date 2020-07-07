@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/daimonos/nasa"
-	"github.com/daimonos/nasa/models"
 	"github.com/gorilla/mux"
+	"github.com/jimdhughes/nasa"
+	"github.com/jimdhughes/nasa/models"
 )
 
 const DAYSECONDS = 60 * 60 * 24

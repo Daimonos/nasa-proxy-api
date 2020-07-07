@@ -6,7 +6,7 @@ A simple proxy with caching using BBolt for NASAs public API
 
 ## Running
 
-Requires the library found at: https://github.com/Daimonos/nasa
+Requires the library found at: https://github.com/jimdhughes/nasa
 
 ## Environment
 
