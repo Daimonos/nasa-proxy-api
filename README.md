@@ -2,7 +2,10 @@
 
 ## Description
 
-A simple proxy with caching using BBolt for NASAs public API
+A simple proxy with caching using Redis for NASAs public API
+
+## Dependencies
+1. Redis
 
 ## Running
 
